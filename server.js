@@ -10,13 +10,14 @@ function onHttpStart() {
 app.use(express.static('public')); 
 // setup a 'route' to listen on the default url path (http://localhost)
 app.get("/", function(req,res){
-   res.send("Home<br /><a href='/about'>Go to the about page</a>");
-});
+    res.sendFile(path.join(__dirname, "/week2-app/views/home.html"));
+  });
 
 // setup another route to listen on /about
 app.get("/about", function(req,res){
-   res.send("<h3>About</h3>");
-});
+    res.sendFile(path.join(__dirname, "/week2-app/views/about.html"));
+  });
+
 
 // setup http server to listen on HTTP_PORT
 app.listen(HTTP_PORT, onHttpStart);
