@@ -10,12 +10,12 @@ function onHttpStart() {
 app.use(express.static('public')); 
 // setup a 'route' to listen on the default url path (http://localhost)
 app.get("/", function(req,res){
-    res.sendFile(path.join(__dirname, "/week2-app/views/home.html"));
+    res.sendFile(path.join(__dirname, "\WEB\web322-app\views"));
   });
 
 // setup another route to listen on /about
 app.get("/about", function(req,res){
-    res.sendFile(path.join(__dirname, "/week2-app/views/about.html"));
+    res.sendFile(path.join(__dirname, "\WEB\web322-app\views"));
   });
 
 
