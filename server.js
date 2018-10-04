@@ -14,7 +14,7 @@ var app = express();
 var path = require("path");
 var data_service = require("./data-service.js");
 
-var HTTP_PORT = process.env.PORT || 3000;
+var HTTP_PORT = process.env.PORT || 8080;
 
 function onHttpStart() {
     console.log("Express http server listening on: " + HTTP_PORT);
