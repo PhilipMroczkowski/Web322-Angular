@@ -65,18 +65,18 @@ module.exports.getEmployeesByDepartment = function(department){
 }
 
 module.exports.getEmployeesByManager = function(manager) {
-    var arrayGetEmployeesByMannager = [];
+    var managers = [];
 
     return new Promise(function(resolve,reject) {
-        for (let i = 0; i < employess.length; i++) {
+        for (var i = 0; i < employess.length; i++) {
             if (employess[i].employeeManagerNum == manager) {
-                arrayGetEmployeesByMannager.push(employess[i]);
+                managers.push(employess[i]);
             }
         }
-        if (arrayGetEmployeesByMannager.length == 0 ) {
+        if (managers.length == 0 ) {
             reject("No Result Returned");
         }
-    resolve(arrayGetEmployeesByMannager);
+    resolve(managers);
     });
 }
 
