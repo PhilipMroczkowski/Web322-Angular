@@ -10,13 +10,13 @@ body{
 }
 		
 header{
-	background-color: rgba(255, 102, 102, 0.39);
+	background-color: rgba(162, 0, 255, 0.445);
 	padding:5px 25px;
 }
 		
 nav{
 	padding:8px;
-	background-color: rgb(71, 71, 71);
+	background-color: rgba(162, 0, 255, 0.445);
 }
 		
 nav ul{
@@ -29,7 +29,7 @@ nav ul{
 nav ul li{
 	
 	display:inline-block;
-	background-color: rgb(71, 71, 71);
+	background-color: rgba(162, 0, 255, 0.445);
 }
 		
 nav ul li a{
