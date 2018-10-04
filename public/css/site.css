@@ -33,8 +33,8 @@ nav ul li{
 }
 		
 nav ul li a{
-	background-color: rgb(189, 143, 143);
-	color: rgb(173, 143, 143);
+	background-color: rgb(240, 238, 238);
+	color: rgb(240, 238, 238);
 	text-decoration: none;
 	padding:0 5px;	
 	font-weight:bold;
@@ -43,8 +43,8 @@ nav ul li a{
 }
 		
 footer{
-	background-color: rgb(146, 116, 116);
-	color: rgb(172, 140, 140);
+	background-color: rgb(240, 238, 238);
+	color: rgb(240, 238, 238);
 	padding:10px;
 }
 		
@@ -57,4 +57,7 @@ footer h2{
 
 p{
 	font-family: 'Open Sans Condensed', sans-serif;
+}
+body {
+    background-color: rgba(136, 136, 136, 0.616) ;
 }
