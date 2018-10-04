@@ -6,7 +6,7 @@
 * 
 *  Name: Philip Mroczkowski Student ID: 21772174 Date: 2018-10-03
 *
-*  Online (Heroku) Link:  
+*  Online (Heroku) Link:  https://secure-sea-97478.herokuapp.com/
 *
 ********************************************************************************/ 
 var express = require("express");
@@ -76,13 +76,13 @@ app.get("/employee/:num", function(req,res){
   });
 });
 
-app.get("/managers", function(req,res){
-      data_service.getManagers().then(function(data){
-        res.json(data);
+app.get("/managers", function(req, res)
+{
+    res.json(dataService.getManagers);
       }).catch(function(err){
         res.json({message: err});
       });
-});
+
 
 app.get("/departments", function(req,res){
       data_service.getDepartments().then(function(data){
