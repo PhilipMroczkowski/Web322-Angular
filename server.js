@@ -76,13 +76,13 @@ app.get("/employee/:num", function(req,res){
   });
 });
 
-app.get("/managers", function(req, res)
-{
-    res.json(dataService.getManagers);
+app.get("/managers", function(req,res){
+      data_service.getManagers().then(function(data){
+        res.json(data);
       }).catch(function(err){
         res.json({message: err});
       });
-
+});
 
 app.get("/departments", function(req,res){
       data_service.getDepartments().then(function(data){
