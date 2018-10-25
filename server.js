@@ -10,6 +10,22 @@
 *
 ********************************************************************************/ 
 
+var express = require("express");
+var app = express();
+var path = require("path");
+var dataService = require("./data-service.js");
+var bodyParser = require('body-parser'); // new
+var multer = require("multer"); // new
+var path = require("path"); // new
+var fs = require("fs"); // new
+
+var http_port = process.env.PORT || 8080;
+
+function onHttpStart() {
+    console.log("Express http server listening on " + http_port);
+}
+
+
 // new
 app.use(bodyParser.urlencoded({extended: true}));
 
