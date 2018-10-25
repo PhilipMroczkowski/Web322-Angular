@@ -20,6 +20,22 @@ module.exports.initialize = function(){
         resolve("successfully read JSON file.");
     });
 }
+// new
+module.exports.AddEmployee = function(employeeData) { 
+    return new Promise(function(resolve, reject){
+        if(employeeData.isManager == null){
+            employeeData.isManager = false;
+            employeeData.employeeNum = employees.length + 1;
+            employees.push(employeeData);
+            resolve(employees);
+        }else{
+            employeeData.isManager = true;
+            employeeData.employeeNum = employees.length + 1;
+            employees.push(employeeData);
+            resolve(employees);
+        }
+    });
+}
 
 module.exports.getAllEmployees = function(){
     var arryAllEmployees=[];
