@@ -9,30 +9,6 @@
 *  Online (Heroku) Link:  https://secure-sea-97478.herokuapp.com/
 *
 ********************************************************************************/ 
-var express = require("express");
-var app = express();
-var path = require("path");
-var data_service = require("./data-service.js");
-var bodyParser = require('body-parser'); // new
-var multer = require("multer"); // new
-var path = require("path"); // new
-var fs = require("fs"); // new
-var HTTP_PORT = process.env.PORT || 8080;
-
-function onHttpStart() {
-    console.log("Express http server listening on: " + HTTP_PORT);
-    return new Promise (function(res,req){
-    data_service.initialize().then(function(data){
-      console.log(data)
-    }).catch(function(err){
-      console.log(err);
-    });
-});
-}
-
-// Load CSS file
-app.use(express.static('public'));
-
 
 // new
 app.use(bodyParser.urlencoded({extended: true}));
@@ -48,101 +24,121 @@ const storage = multer.diskStorage({
 // new
 const upload = multer({storage: storage});
 
-app.get("/", function(req,res){
-
-   res.sendFile(path.join(__dirname + "/views/home.html"));
+app.get("/", function(req, res) {
+    res.sendFile(path.join(__dirname, "/views/home.html"));
 });
 
-app.get("/about", function(req,res){
-  res.sendFile(path.join(__dirname + "/views/about.html"));
+app.get("/about", function(req, res) {
+    res.sendFile(path.join(__dirname, "/views/about.html"));
 });
-
-app.get("/employees", function(req,res){
-
+// new
+app.get("/employees", function(req, res) {
     if(req.query.status){
-      data_service.getEmployeesByStatus(req.query.status).then(function(data){
-        res.json(data);
-      }).catch(function(err){
-        res.json({message: err});
-      });
-    }else if(req.query.department){
-      data_service.getEmployeesByDepartment(req.query.department).then(function(data){
-        res.json(data);
-      }).catch(function(err){
-        res.json({message: err});
-      });
-    }else if(req.query.manager){
-      data_service.getEmployeesByManager(req.query.manager).then(function(data){
-        res.json(data);
-      }).catch(function(err){
-        res.json({message: err});
-      });
-    }else{
-      data_service.getAllEmployees().then(function(data){
-        res.json(data);
-      }).catch(function(err){
-        res.json({message: err});
-      });
+        dataService.getEmployeesByStatus(req.query.status)
+        .then(function(data){
+            res.json(data);
+        })
+        .catch(function(err){
+            res.send(err);
+        })
     }
+    else if(req.query.department){
+        dataService.getEmployeesByDepartment(req.query.department)
+        .then(function(data){
+            res.json(data);
+        })
+        .catch(function(err){
+            res.send(err);
+        })
+    }
+    else if(req.query.manager){
+        dataService.getEmployeesByManager(req.query.manager)
+        .then(function(data){
+            res.json(data);
+        })
+        .catch(function(err){
+            res.send(err);
+        })
+    }
+    else{
+        dataService.getAllEmployees()
+        .then(function(data){
+            res.json(data);
+        })
+        .catch(function(err){
+            res.send(err);
+        })
+    }    
 });
 //new
 app.get("/employees/value", function(req, res){
-  dataService.getEmployeesByNum(req.params.num)
-  .then(function(data){
-      res.json(data);
-  })
-  .catch(function(err){
-      res.send(err);
-  });
+    dataService.getEmployeesByNum(req.params.num)
+    .then(function(data){
+        res.json(data);
+    })
+    .catch(function(err){
+        res.send(err);
+    });
 });
-app.get("/employee/:num", function(req,res){
-  data_service.getEmployeeByNum(req.params.num).then(function(data){
-    res.json(data);
-  }).catch(function(err){
-      res.json({message: err});
-  });
+
+app.get("/employees/add", function(req, res){
+    res.sendFile(path.join(__dirname + "/views/addEmployee.html"));
 });
 // new
 app.post("/employees/add", function(req, res) {
-  dataService.AddEmployee(req.body)
-  .then(function(data){
-      res.redirect("/employees")
-  })
-  .catch(function(err){
-      res.send(err);
-  });
-});
-app.get("/managers", function(req,res){
-      data_service.getManagers().then(function(data){
-        res.json(data);
-      }).catch(function(err){
-        res.json({message: err});
-      });
+    dataService.AddEmployee(req.body)
+    .then(function(data){
+        res.redirect("/employees")
+    })
+    .catch(function(err){
+        res.send(err);
+    });
 });
 
-app.get("/departments", function(req,res){
-      data_service.getDepartments().then(function(data){
+app.get("/managers", function(req, res) {
+    dataService.getManagers()
+    .then(function(data) {
         res.json(data);
-      }).catch(function(err){
-        res.json({message: err});
-      });
+    })
+    .catch(function(error) {
+        res.json({"message": error});
+    })
 });
+
+app.get("/departments", function(req, res) {
+    dataService.getDepartments()
+    .then(function(data) {
+        res.json(data);
+    })
+    .catch(function(error) {
+        res.json({"message": error});
+    })
+});
+
 // new
 app.get("/images", function(req, res){
-  fs.readdir(__dirname + "/public/images/uploaded", function(err, images){
-       res.json({images});
-  });
+    fs.readdir(__dirname + "/public/images/uploaded", function(err, images){
+         res.json({images});
+    });
 });
 //new
 app.get("/images/add", function(req, res){
-  res.sendFile(path.join(__dirname + "/views/addImage.html"));
+    res.sendFile(path.join(__dirname + "/views/addImage.html"));
 });
 // new
 app.post("/images/add", upload.single("imageFile"), function(req, res) {
-  res.redirect("/images");
-});
-app.use(function(req, res) {
-  res.status(404).send("Sorry, Page Not Found! ");
+    res.redirect("/images");
 });
 
-app.listen(HTTP_PORT, onHttpStart);
+app.use(function(req, res) {
+    res.status(404).send("Page Not Found");
+});
+
+dataService.initialize()
+.then(function() {
+    app.listen(http_port, onHttpStart);
+})
+.catch(function() {
+
+    console.log("unable to start server");
+});
