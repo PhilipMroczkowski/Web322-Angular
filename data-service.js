@@ -135,19 +135,29 @@ module.exports.getEmployeesByManager = function(manager){
     });
 }
 
-module.exports.getEmployeesByNum = function(num){
-    return new Promise(function(resolve, reject){
-        var employeeNumList = [];
-        for(var i = 0; i < employees.length; i++){
-            if(employees[i].employeeNum == num){
-                employeeNumList.push(employees[i]);
+module.exports.getEmployeesByNum = (num) => {
+    return new Promise ((resolve, reject) => {
+        for (let i = 0; i < employees.length; i++) {
+            if (employees[i].employeeNum == num) {
+                resolve(employees[i]);
             }
         }
-        if(employeeNumList.length == 0){
-            reject("No results returned");
+        reject("This Employee does not exist");
+    });
+}
+// new
+module.exports.updateEmployee = function(employeeData) {
+    return new Promise(function(resolve,reject) {
+        try {
+            for (let i = 0; i < employees.length; i++) {
+                if (employees[i].employeeNum == employeeData.employeeNum) {
+                    employees[i] = employeeData;
+                }
+            }
+        } catch(ex) {
+            reject("Failed to Update Employee");
         }
-        else{
-            resolve(employeeNumList);            
-        }
+
+        resolve();
     });
 }
